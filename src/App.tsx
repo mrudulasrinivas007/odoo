@@ -1,26 +1,89 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { AppLayout } from "./layouts/AppLayout";
-import { DashboardPage } from "./pages/DashboardPage";
-import { ProductsPage } from "./pages/ProductsPage";
-import { OperationsPage } from "./pages/OperationsPage";
-import { SettingsPage } from "./pages/SettingsPage";
-import { ProfilePage } from "./pages/ProfilePage";
-import { NotFoundPage } from "./pages/NotFoundPage";
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { InventoryProvider } from './context/InventoryContext';
+import { AppShell } from './components/AppShell';
+
+import Dashboard from './pages/Dashboard';
+import Products from './pages/Products';
+import Operations from './pages/Operations';
+import Warehouses from './pages/Warehouses';
+import Ledger from './pages/Ledger';
+import Reports from './pages/Reports';
+import Settings from './pages/Settings';
+import Profile from './pages/Profile';
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <InventoryProvider>
       <Routes>
-        <Route element={<AppLayout />}>
-          <Route index element={<Navigate to="/dashboard" replace />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/operations" element={<OperationsPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="*" element={<NotFoundPage />} />
+        <Route element={<AppShell />}>
+
+          <Route
+            path="/"
+            element={<Navigate to="/dashboard" replace />}
+          />
+
+          <Route
+            path="/dashboard"
+            element={<Dashboard />}
+          />
+
+          <Route
+            path="/products"
+            element={<Products />}
+          />
+
+          <Route
+            path="/receipts"
+            element={<Operations type="Receipt" />}
+          />
+
+          <Route
+            path="/deliveries"
+            element={<Operations type="Delivery" />}
+          />
+
+          <Route
+            path="/transfers"
+            element={<Operations type="Transfer" />}
+          />
+
+          <Route
+            path="/adjustments"
+            element={<Operations type="Adjustment" />}
+          />
+
+          <Route
+            path="/ledger"
+            element={<Ledger />}
+          />
+
+          <Route
+            path="/warehouses"
+            element={<Warehouses />}
+          />
+
+          <Route
+            path="/reports"
+            element={<Reports />}
+          />
+
+          <Route
+            path="/settings"
+            element={<Settings />}
+          />
+
+          <Route
+            path="/profile"
+            element={<Profile />}
+          />
+
+          <Route
+            path="*"
+            element={<Navigate to="/dashboard" replace />}
+          />
+
         </Route>
       </Routes>
-    </BrowserRouter>
+    </InventoryProvider>
   );
 }
